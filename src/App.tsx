@@ -3,17 +3,11 @@
 
 
 import { useEffect, useState } from 'react'
-import './App.css'
-
+import './App.css';
+import CardList from './components/CardList';
+import type { Person } from './interfaces';
 function App() {
-  interface Person {
-    name: {
-      first: string
-    },
-    picture: {
-      large: string
-    }
-  }
+  
   const [people, setPeople] = useState<Person[]>([]);
   const [searchField, setSearchField] = useState<string>('')
   const getPeople = async():Promise<Person[]> => {
@@ -38,16 +32,8 @@ function App() {
     <button onClick={() =>     getPeople().then(people => setPeople(people)) }>Refresh</button>
       <h1>Guest Entrance </h1>
       <input type="text" placeholder='search guests' onChange={onSearchChange} />
-    
-      {filteredPeople.length && filteredPeople.map((person:Person) => (
-        <li>
-          <img src={person.picture.large} alt="Person's profile picture" />
-          <h4>
-
-          {person.name.first}
-          </h4>
-        </li>
-      ))}
+      <CardList filteredPeople={filteredPeople} />
+      
     </>
   )
 }
